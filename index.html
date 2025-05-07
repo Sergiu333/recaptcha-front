@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Test reCAPTCHA</title>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</head>
-<body>
-<h1>Testare reCAPTCHA</h1>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcm_TArAAAAAJmuAwrUNt-mLihS05Dnw0KQZ867"></script>
 
 <form id="captcha-form" action="#" method="POST">
-    <div class="g-recaptcha" data-sitekey="6Lcm_TArAAAAAJmuAwrUNt-mLihS05Dnw0KQZ867"></div>
-
-    <br />
     <button type="submit">Trimite</button>
 </form>
 
@@ -21,7 +10,7 @@
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const token = grecaptcha.getResponse();
+        const token = await grecaptcha.execute('6Lcm_TArAAAAAJmuAwrUNt-mLihS05Dnw0KQZ867', { action: 'submit' });
 
         if (!token) {
             alert('Te rog completeaza captcha!');
@@ -29,7 +18,7 @@
         }
 
         try {
-            const response = await fetch('https://recaptcha-back.vercel.app/verify', { 
+            const response = await fetch('https://recaptcha-back.vercel.app/verify', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -46,5 +35,3 @@
         }
     });
 </script>
-</body>
-</html>
