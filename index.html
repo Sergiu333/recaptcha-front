@@ -1,7 +1,18 @@
-<script src="https://www.google.com/recaptcha/api.js?render=6Lcm_TArAAAAAJmuAwrUNt-mLihS05Dnw0KQZ867"></script>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test reCAPTCHA v2</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<h1>Test reCAPTCHA v2</h1>
 
 <form id="captcha-form" action="#" method="POST">
-    <button type="submit">Trimite</button>
+    <!-- Widgetul reCAPTCHA cu checkbox -->
+    <div class="g-recaptcha" data-sitekey="6Lf2IDErAAAAAFpdiKe1LmFuvGWpTfMnyxKn2pXm"></div>
+    <button type="submit">Trimite1</button>
 </form>
 
 <script>
@@ -10,7 +21,7 @@
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const token = await grecaptcha.execute('6Lcm_TArAAAAAJmuAwrUNt-mLihS05Dnw0KQZ867', { action: 'submit' });
+        const token = grecaptcha.getResponse();  // Obține tokenul reCAPTCHA
 
         if (!token) {
             alert('Te rog completeaza captcha!');
@@ -18,7 +29,7 @@
         }
 
         try {
-            const response = await fetch('https://recaptcha-back.vercel.app/verify', {
+            const response = await fetch('https://recaptcha-back.vercel.app/verify', {  // Asigură-te că adresa serverului este corectă
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -35,3 +46,5 @@
         }
     });
 </script>
+</body>
+</html>
