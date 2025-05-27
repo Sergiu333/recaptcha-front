@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
@@ -46,5 +46,45 @@
         }
     });
 </script>
+</body>
+</html>
+ -->
+
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Test reCAPTCHA v3</title>
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lddu0orAAAAAJX_tGcRWQFMkIhPXfo8ShMGvqgT"></script>
+  <script>
+    function runCaptcha() {
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6Lddu0orAAAAAJX_tGcRWQFMkIhPXfo8ShMGvqgT', { action: 'submit' }).then(function (token) {
+          // Trimite tokenul către backend
+          fetch('http://localhost:3000/verify', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token })
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Răspuns server:', data);
+              alert(`reCAPTCHA success: ${data.success}, scor: ${data.score}`);
+            })
+            .catch(error => {
+              console.error('Eroare:', error);
+              alert('A apărut o eroare.');
+            });
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>Test Google reCAPTCHA v3</h1>
+  <button onclick="runCaptcha()">Verifică</button>
 </body>
 </html>
